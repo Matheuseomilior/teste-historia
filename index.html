@@ -26,11 +26,6 @@
       cursor: pointer;
       margin-top: 20px;
     }
-    #textDisplay {
-      margin-top: 30px;
-      font-size: 20px;
-      max-width: 600px;
-    }
     #finalMessage {
       font-size: 24px;
       font-weight: bold;
@@ -40,7 +35,8 @@
     }
     #storyImage {
       display: none;
-      width: 300px;
+      width: 80%;
+      max-width: 800px;
       margin-top: 30px;
       border-radius: 12px;
     }
@@ -50,47 +46,28 @@
   <h2 id="instruction">Clique em iniciar para ouvir a história</h2>
   <button id="startButton">Iniciar</button>
   <img id="storyImage" src="imagem-historia.png" alt="Chapeuzinho e Lobo" />
-  <div id="textDisplay"></div>
   <div id="finalMessage">Retorne para o teste</div>
   <audio id="audio" src="historia.mp3"></audio>
 
   <script>
-    const texto = `Era uma vez uma moça de capuz vermelho, que ia ao bosque pulava e cantava sem nunca parar, mesmo sem ser verdade agora essa história eu preciso lhe contar. Uma cesta carregava, pois a vozinha iria alimentar. Haviam flores vermelhas e azuis, nenhuma amarela encontrava por lá, onde elas estavam, será? Então, ao fundo, ouvia o latido de um cachorro, o leão espreitava, o medo chegava, pois sem saber o que fazer ela estava. O leão chamava Aslan, e então seu amigo ficou, ufa, pois por um susto ela passou. Seguiu seu caminho, rumo a sua vozinha encontrar, e de repente, o tempo fechou, o lobo chegou, o que ele queria? Um biscoito para se alimentar, e ajudar a chapeuzinho no seu destino chegar. Essa não é uma história de terror, embora ela sentisse o tremor, pois da chuva não conseguiu escapar, mas até a vozinha ela conseguiu chegar. Isso te lembra alguma coisa? A sua memória agora eu vou testar.`;
-
     const startButton = document.getElementById("startButton");
     const instruction = document.getElementById("instruction");
     const audio = document.getElementById("audio");
-    const textDisplay = document.getElementById("textDisplay");
-    const finalMessage = document.getElementById("finalMessage");
     const storyImage = document.getElementById("storyImage");
-
-    function mostrarTextoGradualmente(texto, velocidade = 60) {
-      let index = 0;
-      const intervalo = setInterval(() => {
-        if (index < texto.length) {
-          textDisplay.innerText += texto[index++];
-        } else {
-          clearInterval(intervalo);
-        }
-      }, velocidade);
-    }
+    const finalMessage = document.getElementById("finalMessage");
 
     startButton.addEventListener("click", () => {
       startButton.style.display = "none";
       instruction.style.display = "none";
       storyImage.style.display = "block";
-      textDisplay.innerText = "";
 
       audio.play();
-      mostrarTextoGradualmente(texto, 60);
 
       audio.onended = () => {
         storyImage.style.display = "none";
-        textDisplay.style.display = "none";
         finalMessage.style.display = "block";
       };
     });
   </script>
 </body>
 </html>
-
