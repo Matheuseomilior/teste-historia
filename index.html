@@ -1,99 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>História Interativa</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #fdf6e3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      padding: 50px;
-      background-color: #fff8f0;
-      color: #333;
+      padding: 20px;
     }
-
-    #start-btn {
-      padding: 15px 30px;
+    #startButton {
+      padding: 10px 20px;
       font-size: 18px;
-      cursor: pointer;
-      background-color: #007bff;
-      border: none;
+      background-color: #007BFF;
       color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
     }
-
-    #start-btn:hover {
-      background-color: #0056b3;
-    }
-
-    #story {
-      margin-top: 40px;
+    #textDisplay {
+      margin-top: 30px;
       font-size: 20px;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-      white-space: pre-wrap;
     }
-
-    #final-message {
+    #finalMessage {
       font-size: 24px;
+      font-weight: bold;
+      color: #333;
       margin-top: 40px;
-      color: #444;
       display: none;
+    }
+    #storyImage {
+      display: none;
+      width: 300px;
+      margin-top: 30px;
+      border-radius: 12px;
     }
   </style>
 </head>
 <body>
-
-  <p>Clique em iniciar para ouvir a história</p>
-  <button id="start-btn">Iniciar</button>
-
-  <div id="story"></div>
-  <div id="final-message">Retorne para o teste</div>
-
+  <h2 id="instruction">Clique em iniciar para ouvir a história</h2>
+  <button id="startButton">Iniciar</button>
+  <img id="storyImage" src="imagem-historia.png" alt="Chapeuzinho e Lobo" />
+  <div id="textDisplay"></div>
+  <div id="finalMessage">Retorne para o teste</div>
   <audio id="audio" src="historia.mp3"></audio>
 
   <script>
-    const storyText = `Era uma vez uma moça de capuz vermelho, que ia ao bosque pulava e cantava sem nunca parar, mesmo sem ser verdade agora essa história eu preciso lhe contar. Uma cesta carregava, pois a vozinha iria alimentar. Haviam flores vermelhas e azuis, nenhuma amarela encontrava por lá, onde elas estavam, será? Então, ao fundo, ouvia o latido de um cachorro, o leão espreitava, o medo chegava, pois sem saber o que fazer ela estava. O leão chamava Aslan, e então seu amigo ficou, ufa, pois por um susto ela passou. Seguiu seu caminho, rumo a sua vozinha encontrar, e de repente, o tempo fechou, o lobo chegou, o que ele queria? Um biscoito para se alimentar, e ajudar a chapeuzinho no seu destino chegar. Essa não é uma história de terror, embora ela sentisse o tremor, pois da chuva não conseguiu escapar, mas até a vozinha ela conseguiu chegar. Isso te lembra alguma coisa? A sua memória agora eu vou testar.`;
+    const texto = `Era uma vez uma moça de capuz vermelho, que ia ao bosque pulava e cantava sem nunca parar, mesmo sem ser verdade agora essa história eu preciso lhe contar. Uma cesta carregava, pois a vozinha iria alimentar. Haviam flores vermelhas e azuis, nenhuma amarela encontrava por lá, onde elas estavam, será? Então, ao fundo, ouvia o latido de um cachorro, o leão espreitava, o medo chegava, pois sem saber o que fazer ela estava. O leão chamava Aslan, e então seu amigo ficou, ufa, pois por um susto ela passou. Seguiu seu caminho, rumo a sua vozinha encontrar, e de repente, o tempo fechou, o lobo chegou, o que ele queria? Um biscoito para se alimentar, e ajudar a chapeuzinho no seu destino chegar. Essa não é uma história de terror, embora ela sentisse o tremor, pois da chuva não conseguiu escapar, mas até a vozinha ela conseguiu chegar. Isso te lembra alguma coisa? A sua memória agora eu vou testar.`;
 
-    const startBtn = document.getElementById('start-btn');
-    const storyDiv = document.getElementById('story');
-    const finalMessage = document.getElementById('final-message');
-    const audio = document.getElementById('audio');
+    const startButton = document.getElementById("startButton");
+    const instruction = document.getElementById("instruction");
+    const audio = document.getElementById("audio");
+    const textDisplay = document.getElementById("textDisplay");
+    const finalMessage = document.getElementById("finalMessage");
+    const storyImage = document.getElementById("storyImage");
 
-    function revealTextGradually(text, duration) {
-      let i = 0;
-      storyDiv.textContent = '';
-      const intervalTime = duration / text.length;
-
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          storyDiv.textContent += text[i];
-          i++;
+    function mostrarTextoGradualmente(texto, velocidade = 60) {
+      let index = 0;
+      const intervalo = setInterval(() => {
+        if (index < texto.length) {
+          textDisplay.innerText += texto[index++];
         } else {
-          clearInterval(interval);
+          clearInterval(intervalo);
         }
-      }, intervalTime);
+      }, velocidade);
     }
 
-    startBtn.addEventListener('click', () => {
-      startBtn.style.display = 'none';
+    startButton.addEventListener("click", () => {
+      startButton.style.display = "none";
+      instruction.style.display = "none";
+      storyImage.style.display = "block";
+      textDisplay.innerText = "";
 
       audio.play();
-
-      audio.onloadedmetadata = () => {
-        revealTextGradually(storyText, audio.duration * 1000);
-      };
+      mostrarTextoGradualmente(texto, 60);
 
       audio.onended = () => {
-        storyDiv.style.display = 'none';
-        finalMessage.style.display = 'block';
+        storyImage.style.display = "none";
+        textDisplay.style.display = "none";
+        finalMessage.style.display = "block";
       };
     });
   </script>
-
 </body>
 </html>
+
