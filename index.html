@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>História Interativa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #9ecb90;
       display: flex;
       flex-direction: column;
@@ -16,6 +17,13 @@
       text-align: center;
       padding: 20px;
     }
+
+    h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
     #startButton {
       padding: 10px 20px;
       font-size: 18px;
@@ -25,19 +33,22 @@
       border-radius: 8px;
       cursor: pointer;
       margin-top: 20px;
+      font-family: 'Poppins', sans-serif;
     }
+
     #finalMessage {
       font-size: 24px;
-      font-weight: bold;
+      font-weight: 600;
       color: #333;
       margin-top: 40px;
       display: none;
     }
+
     #storyImage {
       display: none;
       width: 80%;
       max-width: 800px;
-      margin-top: 30px;
+      margin: 30px auto 0;
       border-radius: 12px;
     }
   </style>
@@ -45,7 +56,7 @@
 <body>
   <h2 id="instruction">Clique em iniciar para ouvir a história</h2>
   <button id="startButton">Iniciar</button>
-  <img id="storyImage" src="imagem-historia.png" alt="A Historia do Allen" />
+  <img id="storyImage" src="imagem-historia.png" alt="A História do Allen" />
   <div id="finalMessage">Retorne para o teste</div>
   <audio id="audio" src="historia.mp3"></audio>
 
