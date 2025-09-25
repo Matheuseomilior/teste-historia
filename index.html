@@ -67,16 +67,48 @@
     const storyImage = document.getElementById("storyImage");
     const finalMessage = document.getElementById("finalMessage");
 
+    const TEMPO_AUDIO = 1000 * 60 * 2; // ajuste para a duração real do áudio (ex: 2 minutos)
+
+    function mostrarFinal() {
+      startButton.style.display = "none";
+      instruction.style.display = "none";
+      storyImage.style.display = "none";
+      finalMessage.style.display = "block";
+    }
+
+    function verificarEstado() {
+      const inicio = sessionStorage.getItem("inicioAudio");
+      const audioFinalizado = sessionStorage.getItem("audioFinalizado");
+
+      if (audioFinalizado) {
+        mostrarFinal();
+      } else if (inicio) {
+        const tempoPassado = Date.now() - parseInt(inicio);
+        if (tempoPassado < TEMPO_AUDIO) {
+          sessionStorage.setItem("audioFinalizado", "true");
+          mostrarFinal();
+        } else {
+          mostrarFinal();
+        }
+      }
+    }
+
+    verificarEstado();
+
     startButton.addEventListener("click", () => {
       startButton.style.display = "none";
       instruction.style.display = "none";
       storyImage.style.display = "block";
+
+      const inicio = Date.now();
+      sessionStorage.setItem("inicioAudio", inicio);
 
       audio.play();
 
       audio.onended = () => {
         storyImage.style.display = "none";
         finalMessage.style.display = "block";
+        sessionStorage.setItem("audioFinalizado", "true");
       };
     });
   </script>
